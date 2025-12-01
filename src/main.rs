@@ -12,6 +12,7 @@ use crate::modules::text_button::TextButton;
 use macroquad::prelude::*;
 use crate::modules::preload_image::TextureManager;
 use crate::modules::preload_image::LoadingScreenOptions;
+use crate::modules::scale::use_virtual_resolution;
 /// Set up window settings before the app runs
 fn window_conf() -> Conf {
     Conf {
@@ -130,6 +131,8 @@ async fn main() {
     let mut dealertotal = 0;
 
     loop {
+        // Set the virtual resolution to 1024x768
+        use_virtual_resolution(1124.0, 768.0);
         clear_background(DARKGREEN);
         let random_card_1 = rand::gen_range(1, 52);
         let random_card_2 = rand::gen_range(1, 52);
