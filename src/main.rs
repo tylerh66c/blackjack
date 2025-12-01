@@ -10,7 +10,8 @@ use crate::modules::label::Label;
 use crate::modules::still_image::StillImage;
 use crate::modules::text_button::TextButton;
 use macroquad::prelude::*;
-
+use crate::modules::preload_image::TextureManager;
+use crate::modules::preload_image::LoadingScreenOptions;
 /// Set up window settings before the app runs
 fn window_conf() -> Conf {
     Conf {
@@ -27,7 +28,16 @@ fn window_conf() -> Conf {
 #[macroquad::main(window_conf)]
 async fn main() {
     rand::srand(date::now() as u64);
-
+    let tm = TextureManager::new();
+   let loading_options = LoadingScreenOptions {
+       title: Some("Black Jack".to_string()),
+       background_color: DARKGREEN,
+       bar_fill_color: GOLD,
+       // Use default values for other options
+       ..Default::default()
+   };
+   tm.preload_with_loading_screen(&["assets/Two-of-clubs.png","assets/Two-of-hearts.png", "assets/Two-of-spades.png", "assets/Two-of-diamonds.png","assets/Three-of-hearts.png", "assets/Three-of-diamonds.png", "assets/Three-of-clubs.png", "assets/Three-of-spades.png", "assets/Four-of-hearts.png", "assets/Four-of-diamonds.png","assets/Four-of-clubs.png","assets/Four-of-spades.png","assets/Five-of-hearts.png","assets/Five-of-diamonds.png","assets/Five-of-clubs.png","assets/Five-of-spades.png","assets/Six-of-hearts.png","assets/Six-of-diamonds.png","assets/Six-of-spades.png", "assets/Six-of-clubs.png","assets/Seven-of-hearts.png","assets/Seven-of-diamonds.png", "assets/Seven-of-clubs.png", "assets/Seven-of-spades.png", "assets/Eight-of-hearts.png", "assets/Eight-of-diamonds.png", "assets/Eight-of-spades.png", "assets/Eight-of-clubs.png", "assets/Nine-of-hearts.png", "assets/Nine-of-diamonds.png", "assets/Nine-of-clubs.png", "assets/Nine-of-spades.png", "assets/Ten-of-hearts.png", "assets/Ten-of-diamonds.png", "assets/Ten-of-spades.png", "assets/Ten-of-clubs.png", "assets/Ace-of-hearts.png", "assets/Ace-of-diamonds.png", "assets/Ace-of-spades.png", "assets/Ace-of-clubs.png", "assets/Jack-of-hearts.png", "assets/Jack-of-diamonds.png", "assets/Jack-of-spades.png", "assets/Jack-of-clubs.png", "assets/Queen-of-hearts.png", "assets/Queen-of-diamonds.png", "assets/Queen-of-spades.png", "assets/Queen-of-clubs.png", "assets/King-of-hearts.png", "assets/King-of-diamonds.png", "assets/King-of-spades.png", "assets/King-of-clubs.png", "assets/Empty.png"], Some(loading_options)).await;
+ 
     let mut cards: Vec<&str> = vec![
         "assets/Two-of-clubs.png",
         "assets/Two-of-hearts.png",
@@ -108,10 +118,10 @@ async fn main() {
     let mut btn_replay = TextButton::new(750.0, 350.0, 200.0, 65.0, "Play Again", BLACK, DARKGRAY, 30);
     let lbl_dealerhand = Label::new("Dealer's Hand", 70.0, 80.0, 30);
     let mut lbl_winner = Label::new("", 525.0, 60.0, 40);
-    let lbl_playerhand = Label::new("Player's Hand", 70.0, 475.0, 30);
+    let lbl_playerhand = Label::new("Your Hand", 70.0, 475.0, 30);
     let mut lbl_playerscore = Label::new("", 300.0, 475.0, 40);
     let mut lbl_dealerscore = Label::new("", 300.0, 80.0, 40);
-    let lbl_playerwins: Label = Label::new("Player Wins:", 725.0, 100.0, 30);
+    let lbl_playerwins: Label = Label::new("Your Wins:", 750.0, 100.0, 30);
     let lbl_dealerwins: Label = Label::new("Dealer Wins:", 725.0, 140.0, 30);
     let mut lbl_playercounter: Label = Label::new("0", 890.0, 100.0, 30);
     let mut lbl_dealercounter: Label = Label::new("0", 890.0, 140.0, 30);
@@ -204,13 +214,13 @@ async fn main() {
                 lbl_winner.set_text("Dealer Wins!");
                 lbl_dealercounter.set_text(format!("{}", lbl_dealercounter.get_text().parse::<i32>().unwrap() + 1));
             } else if dealertotal > 21 && playertotal < 22 {
-                lbl_winner.set_text("Player Wins!");
+                lbl_winner.set_text("You Win!");
                 lbl_playercounter.set_text(format!("{}", lbl_playercounter.get_text().parse::<i32>().unwrap() + 1));
             } else if dealertotal > playertotal && dealertotal < 22 {
                 lbl_winner.set_text("Dealer Wins!");
                 lbl_dealercounter.set_text(format!("{}", lbl_dealercounter.get_text().parse::<i32>().unwrap() + 1));
             } else if dealertotal < playertotal && playertotal < 22 {
-                lbl_winner.set_text("Player Wins!");
+                lbl_winner.set_text("You Win!");
                 lbl_playercounter.set_text(format!("{}", lbl_playercounter.get_text().parse::<i32>().unwrap() + 1));
             } else if dealertotal > 21 && playertotal > 21 {
                 lbl_winner.set_text("No Winner!");

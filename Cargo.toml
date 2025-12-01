@@ -8,4 +8,4 @@ macroquad = "0.4.14"
 
 [features]
 scale = []
-default = []
+default = ["scale"]

@@ -1,0 +1,47 @@
+
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>blackjack</title>
+            <style>
+                 /* === MODE 1: Responsive fullscreen canvas (default) === */
+        html,body,canvas {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+        }
+
+        /* === MODE 2: Fixed-size centered canvas (uncomment to use) === */
+        /*
+        body {
+            margin: 0;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            width: 1024px;
+            height: 768px;
+            background: black;
+        }
+
+        html {
+            overflow: hidden;
+        }
+        */
+            </style>
+        </head>
+        <body>
+            <canvas id="glcanvas" tabindex='1'></canvas>
+            <script src="https://not-fl3.github.io/miniquad-samples/mq_js_bundle.js"></script>
+            <script>load("pkg/blackjack.wasm");</script>
+        </body>
+        </html>
+        
