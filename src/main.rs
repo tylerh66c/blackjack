@@ -132,7 +132,7 @@ async fn main() {
 
     loop {
         // Set the virtual resolution to 1024x768
-        use_virtual_resolution(1124.0, 768.0);
+        use_virtual_resolution(1000.0, 700.0);
         clear_background(DARKGREEN);
         let random_card_1 = rand::gen_range(1, 52);
         let random_card_2 = rand::gen_range(1, 52);
@@ -143,17 +143,27 @@ async fn main() {
             break;
         }
         if btn_deal.click() {
-            first_card.set_texture(cards[random_card_1]).await;
-            second_card.set_texture(cards[random_card_2]).await;
+           // first_card.set_texture(cards[random_card_1]).await;
+               first_card.set_preload(tm.get_preload(cards[random_card_1]).unwrap());
+            //second_card.set_texture(cards[random_card_2]).await;
+               second_card.set_preload(tm.get_preload(cards[random_card_2]).unwrap());
             playertotal = scores[random_card_1] + scores[random_card_2];
             lbl_playerscore.set_text(format!("{}", playertotal));
+            
             if playertotal > 20 {
                 btn_hit.enabled = false;
+            if playertotal > 21 {
+                (playertotal =-10);
+            }
             }
             let random_dealer_1 = rand::gen_range(1, 52);
-            dealer_card1.set_texture(cards[random_dealer_1]).await;
+            //dealer_card1.set_texture(cards[random_dealer_1]).await;
+               dealer_card1.set_preload(tm.get_preload(cards[random_dealer_1]).unwrap());
             dealertotal = scores[random_dealer_1];
             lbl_dealerscore.set_text(format!("{}", dealertotal));
+            if dealertotal > 21 {
+                (dealertotal =-10);
+            }
             btn_deal.enabled = false;
             btn_hit.enabled = true;
             btn_stand.enabled = true;
@@ -164,7 +174,8 @@ async fn main() {
              let random_card_3 = rand::gen_range(1, 52);
 
             if numofhits == 1 {
-                third_card.set_texture(cards[random_card_3]).await;
+                //third_card.set_texture(cards[random_card_3]).await;
+                third_card.set_preload(tm.get_preload(cards[random_card_3]).unwrap());
                 playertotal += scores[random_card_3];
                 if playertotal > 22 {
                     btn_hit.enabled = false;
@@ -173,7 +184,8 @@ async fn main() {
                 lbl_playerscore.set_text(format!("{}", playertotal));
 
             } else if numofhits==2 {
-                 fourth_card.set_texture(cards[random_card_3]).await;
+                 //fourth_card.set_texture(cards[random_card_3]).await;
+                fourth_card.set_preload(tm.get_preload(cards[random_card_3]).unwrap());
                 playertotal += scores[random_card_3];
                 lbl_playerscore.set_text(format!("{}", playertotal));
                 if playertotal > 20 {
@@ -181,7 +193,8 @@ async fn main() {
                 }
             } else if numofhits==3 {
                 btn_hit.enabled = false;
-                 fifth_card.set_texture(cards[random_card_3]).await;
+                // fifth_card.set_texture(cards[random_card_3]).await;
+                fifth_card.set_preload(tm.get_preload(cards[random_card_3]).unwrap());
                 playertotal += scores[random_card_3];
                 lbl_playerscore.set_text(format!("{}", playertotal));
                 if playertotal > 20 {
@@ -194,21 +207,25 @@ async fn main() {
             let random_dealer_3 = rand::gen_range(1, 52);
             let random_dealer_4 = rand::gen_range(1, 52);
             let random_dealer_5 = rand::gen_range(1, 52);
-            dealer_card2.set_texture(cards[random_dealer_2]).await;
+            //dealer_card2.set_texture(cards[random_dealer_2]).await;
+            dealer_card2.set_preload(tm.get_preload(cards[random_dealer_2]).unwrap());
             dealertotal += scores[random_dealer_2];
             lbl_dealerscore.set_text(format!("{}", dealertotal));
             if dealertotal < 16 {
-            dealer_card3.set_texture(cards[random_dealer_3]).await;
+            //dealer_card3.set_texture(cards[random_dealer_3]).await;
+            dealer_card3.set_preload(tm.get_preload(cards[random_dealer_3]).unwrap());
             dealertotal += scores[random_dealer_3];
             lbl_dealerscore.set_text(format!("{}", dealertotal));
             }
             if dealertotal < 16 {
-            dealer_card4.set_texture(cards[random_dealer_4]).await;
+            //dealer_card4.set_texture(cards[random_dealer_4]).await;
+            dealer_card4.set_preload(tm.get_preload(cards[random_dealer_4]).unwrap());
             dealertotal += scores[random_dealer_4];
             lbl_dealerscore.set_text(format!("{}", dealertotal));
             }
             if dealertotal < 16 {
-            dealer_card5.set_texture(cards[random_dealer_5]).await;
+            //dealer_card5.set_texture(cards[random_dealer_5]).await;
+            dealer_card5.set_preload(tm.get_preload(cards[random_dealer_5]).unwrap());
             dealertotal += scores[random_dealer_5];
             lbl_dealerscore.set_text(format!("{}", dealertotal));
             }
@@ -236,14 +253,22 @@ async fn main() {
             btn_replay.enabled = true;
         }
         if btn_replay.click() {
-            first_card.set_texture("assets/Empty.png").await;
-            second_card.set_texture("assets/Empty.png").await;
-            dealer_card1.set_texture("assets/Empty.png").await;
-            dealer_card2.set_texture("assets/Empty.png").await;
-            dealer_card3.set_texture("assets/Empty.png").await;
-            third_card.set_texture("assets/Empty.png").await;
-            fourth_card.set_texture("assets/Empty.png").await;
-            fifth_card.set_texture("assets/Empty.png").await;
+            //first_card.set_texture("assets/Empty.png").await;
+            first_card.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //second_card.set_texture("assets/Empty.png").await;
+            second_card.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //dealer_card1.set_texture("assets/Empty.png").await;
+            dealer_card1.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //dealer_card2.set_texture("assets/Empty.png").await;
+            dealer_card2.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //dealer_card3.set_texture("assets/Empty.png").await;
+            dealer_card3.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //third_card.set_texture("assets/Empty.png").await;
+            third_card.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //fourth_card.set_texture("assets/Empty.png").await;
+            fourth_card.set_preload(tm.get_preload("assets/Empty.png").unwrap());
+            //fifth_card.set_texture("assets/Empty.png").await;
+            fifth_card.set_preload(tm.get_preload("assets/Empty.png").unwrap());
             btn_deal.enabled = true;
             btn_hit.enabled = false;
             btn_stand.enabled = false;
