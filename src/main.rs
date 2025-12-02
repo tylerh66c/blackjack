@@ -109,16 +109,21 @@ async fn main() {
     let mut dealer_card5 = StillImage::new("assets/Empty.png", 110.0, 160.0, 600.0, 100.0, true, 1.0).await;
     let mut fourth_card = StillImage::new("assets/Empty.png", 110.0, 160.0, 475.0, 500.0, true, 1.0).await;
     let mut third_card = StillImage::new("assets/Empty.png", 110.0, 160.0, 350.0, 500.0, true, 1.0).await;
-    let btn_exit = TextButton::new(780.0, 0.0, 200.0, 65.0, "Exit", BLACK, DARKGRAY, 35);
+    let mut btn_exit = TextButton::new(780.0, 0.0, 200.0, 65.0, "Exit", BLACK, DARKGRAY, 35);
+        btn_exit.with_round(3.0);
     let mut fifth_card = StillImage::new("assets/Empty.png", 110.0, 160.0, 600.0, 500.0, true, 1.0).await;
     let mut btn_deal = TextButton::new(100.0, 350.0, 200.0, 65.0, "Deal", BLACK, DARKGRAY, 35);
+        btn_deal.with_round(5.0);
     let mut btn_hit = TextButton::new(330.0, 350.0, 170.0, 65.0, "Hit", BLACK, DARKGRAY, 35);
+    btn_hit.with_round(5.0);
     btn_hit.enabled = false;
     let mut btn_stand = TextButton::new(530.0, 350.0, 170.0, 65.0, "Stand", BLACK, DARKGRAY, 35);
+        btn_stand.with_round(5.0);
     btn_stand.enabled = false;
     let mut btn_replay = TextButton::new(750.0, 350.0, 200.0, 65.0, "Play Again", BLACK, DARKGRAY, 30);
+        btn_replay.with_round(5.0);
     let lbl_dealerhand = Label::new("Dealer's Hand", 70.0, 80.0, 30);
-    let mut lbl_winner = Label::new("", 525.0, 60.0, 40);
+    let mut lbl_winner = Label::new("", 485.0, 60.0, 50);
     let lbl_playerhand = Label::new("Your Hand", 70.0, 475.0, 30);
     let mut lbl_playerscore = Label::new("", 300.0, 475.0, 40);
     let mut lbl_dealerscore = Label::new("", 300.0, 80.0, 40);
@@ -153,7 +158,7 @@ async fn main() {
             if playertotal > 20 {
                 btn_hit.enabled = false;
             if playertotal > 21 {
-                (playertotal =-10);
+                (playertotal  = playertotal -10);
             }
             }
             let random_dealer_1 = rand::gen_range(1, 52);
@@ -162,7 +167,7 @@ async fn main() {
             dealertotal = scores[random_dealer_1];
             lbl_dealerscore.set_text(format!("{}", dealertotal));
             if dealertotal > 21 {
-                (dealertotal =-10);
+                (dealertotal = dealertotal -10);
             }
             btn_deal.enabled = false;
             btn_hit.enabled = true;
